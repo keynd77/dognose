@@ -21,6 +21,13 @@ document.addEventListener('click', function(event) {
     dogNose.style.left = x + 'px';
     dogNose.style.top = y + 'px';
     
+    // Create and play sniffing sound
+    const audio = new Audio('sniffing.mp3');
+    audio.volume = 0.5; // Set volume to 50%
+    audio.play().catch(error => {
+        console.log('Audio play failed:', error);
+    });
+    
     // Add the dog nose to the page
     document.body.appendChild(dogNose);
 });
