@@ -12,6 +12,31 @@ body {
     cursor: crosshair;
 }
 
+.sound-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.sound-toggle:hover {
+    background: #333;
+    transform: scale(1.1);
+}
+
+.sound-toggle.muted {
+    background: #666;
+}
+
 .container {
     position: absolute;
     top: 50%;
