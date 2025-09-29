@@ -4,8 +4,8 @@ document.addEventListener('click', function(event) {
     dogNose.src = 'dognose.png';
     dogNose.className = 'dog-nose';
     
-    // Generate random size between 50px and 140px
-    const size = Math.floor(Math.random() * 91) + 50; // 50-140px
+    // Generate random size between 60px and 170px
+    const size = Math.floor(Math.random() * 111) + 60; // 60-170px
     dogNose.style.width = size + 'px';
     dogNose.style.height = size + 'px';
     
