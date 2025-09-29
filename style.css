@@ -47,10 +47,11 @@ body {
 }
 
 .title {
-    font-size: 4rem;
+    font-family: 'Anton', sans-serif;
+    font-size: 16rem;
     font-weight: bold;
     color: black;
-    margin-bottom: 1rem;
+    margin-bottom: -2rem;
 }
 
 .subtitle {
