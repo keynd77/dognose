@@ -12,10 +12,17 @@ body {
     cursor: crosshair;
 }
 
-.sound-toggle {
+.top-controls {
     position: fixed;
     top: 20px;
     right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 100;
+}
+
+.sound-toggle {
     background: black;
     color: white;
     border: none;
@@ -24,7 +31,6 @@ body {
     height: 50px;
     font-size: 20px;
     cursor: pointer;
-    z-index: 100;
     transition: all 0.3s ease;
 }
 
@@ -35,6 +41,31 @@ body {
 
 .sound-toggle.muted {
     background: #666;
+}
+
+.social-button {
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.social-button:hover {
+    background: #333;
+    transform: scale(1.1);
+}
+
+.twitter-button:hover {
+    background: #1DA1F2;
+}
+
+.community-button:hover {
+    background: #00C851;
 }
 
 .container {
