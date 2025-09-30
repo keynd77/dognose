@@ -165,16 +165,17 @@ function addNoseToCanvas() {
             draggable: true,
         });
         
-        // Add transformer for resizing
+        // Add transformer for resizing, rotating, and mirroring
         const transformer = new Konva.Transformer({
             nodes: [nose],
-            enabledAnchors: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
-            rotateEnabled: false,
+            enabledAnchors: ['top-left', 'top-right', 'bottom-left', 'bottom-right', 'top-center', 'bottom-center', 'middle-left', 'middle-right'],
+            rotateEnabled: true,
             borderStroke: '#00D2FF',
             borderStrokeWidth: 2,
             anchorStroke: '#00D2FF',
             anchorFill: '#00D2FF',
             anchorSize: 8,
+            rotationAnchorOffset: 20,
         });
         
         // Store transformer reference on the nose object
@@ -264,19 +265,33 @@ function downloadMeme() {
         
         // Draw nose images
         noseImages.forEach(nose => {
-            // Get the actual scaled dimensions from the Konva image
+            // Get the actual scaled dimensions and rotation from the Konva image
             const scaleX = nose.scaleX();
             const scaleY = nose.scaleY();
             const width = nose.width() * scaleX;
             const height = nose.height() * scaleY;
+            const rotation = nose.rotation();
             
+            // Save the current canvas state
+            ctx.save();
+            
+            // Move to the center of the nose image
+            ctx.translate(nose.x() + width/2, nose.y() + height/2);
+            
+            // Apply rotation
+            ctx.rotate(rotation * Math.PI / 180);
+            
+            // Draw the image centered
             ctx.drawImage(
                 nose.image(),
-                nose.x(),
-                nose.y(),
+                -width/2,
+                -height/2,
                 width,
                 height
             );
+            
+            // Restore the canvas state
+            ctx.restore();
         });
         
         // Convert to data URL and download
