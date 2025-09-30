@@ -91,6 +91,26 @@ body {
     font-weight: normal;
 }
 
+.meme-link {
+    display: inline-block;
+    background: black;
+    color: white;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.meme-link:hover {
+    background: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
 .dog-nose {
     position: absolute;
     pointer-events: none;

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOSE Meme Maker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="meme-maker.css">
+    <script src="https://unpkg.com/konva@10.0.0-1/konva.min.js"></script>
+</head>
+<body>
+    <div class="meme-maker-container">
+        <div class="top-controls">
+            <button class="social-button twitter-button" onclick="window.open('https://x.com/nose__cto', '_blank')">𝕏</button>
+            <button class="social-button community-button" onclick="window.open('https://x.com/i/communities/1972856955753681002', '_blank')">👥</button>
+        </div>
+        
+        <div class="meme-header">
+            <h1 class="meme-title">NOSE MEME MAKER</h1>
+            <div class="controls">
+                <a href="index.html" class="back-btn">← Back to Main</a>
+                <button id="uploadBtn" class="upload-btn">📁 Upload Image</button>
+                <button id="addNoseBtn" class="add-nose-btn">👃 Add Nose</button>
+                <button id="downloadBtn" class="download-btn">💾 Download</button>
+                <button id="clearBtn" class="clear-btn">🗑️ Clear All</button>
+            </div>
+        </div>
+        
+        <div class="canvas-container">
+            <div id="dropZone" class="drop-zone">
+                <div class="drop-text">
+                    <p>📁 Drag & Drop Image Here</p>
+                    <p>or click here to upload</p>
+                </div>
+            </div>
+            <div id="konvaContainer"></div>
+        </div>
+        
+        <input type="file" id="fileInput" accept="image/*" style="display: none;">
+    </div>
+    
+    <script src="meme-maker.js"></script>
+</body>
+</html>
