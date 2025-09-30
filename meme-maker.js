@@ -265,21 +265,30 @@ function downloadMeme() {
         
         // Draw nose images
         noseImages.forEach(nose => {
-            // Get the actual scaled dimensions and rotation from the Konva image
+            // Get all transformation properties
+            const x = nose.x();
+            const y = nose.y();
+            const width = nose.width();
+            const height = nose.height();
             const scaleX = nose.scaleX();
             const scaleY = nose.scaleY();
-            const width = nose.width() * scaleX;
-            const height = nose.height() * scaleY;
             const rotation = nose.rotation();
+            
+            // Calculate actual dimensions after scaling
+            const scaledWidth = width * Math.abs(scaleX);
+            const scaledHeight = height * Math.abs(scaleY);
             
             // Save the current canvas state
             ctx.save();
             
             // Move to the center of the nose image
-            ctx.translate(nose.x() + width/2, nose.y() + height/2);
+            ctx.translate(x + width/2, y + height/2);
             
             // Apply rotation
             ctx.rotate(rotation * Math.PI / 180);
+            
+            // Apply scaling (handle negative scales for mirroring)
+            ctx.scale(scaleX, scaleY);
             
             // Draw the image centered
             ctx.drawImage(
