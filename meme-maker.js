@@ -234,7 +234,7 @@ function addNoseToCanvas() {
 }
 
 
-// Download meme using manual canvas drawing
+// Download meme using Konva's built-in method with fallback
 function downloadMeme() {
     if (!backgroundImage) {
         alert('Please upload an image first!');
@@ -246,65 +246,12 @@ function downloadMeme() {
     layer.draw();
     
     try {
-        // Create a new canvas for download
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = stage.width();
-        canvas.height = stage.height();
-        
-        // Draw background image
-        if (backgroundImage) {
-            ctx.drawImage(
-                backgroundImage.image(),
-                backgroundImage.x(),
-                backgroundImage.y(),
-                backgroundImage.width(),
-                backgroundImage.height()
-            );
-        }
-        
-        // Draw nose images
-        noseImages.forEach(nose => {
-            // Get all transformation properties
-            const x = nose.x();
-            const y = nose.y();
-            const width = nose.width();
-            const height = nose.height();
-            const scaleX = nose.scaleX();
-            const scaleY = nose.scaleY();
-            const rotation = nose.rotation();
-            
-            // Calculate the actual center position after scaling
-            const centerX = x + (width * scaleX) / 2;
-            const centerY = y + (height * scaleY) / 2;
-            
-            // Save the current canvas state
-            ctx.save();
-            
-            // Move to the calculated center
-            ctx.translate(centerX, centerY);
-            
-            // Apply rotation
-            ctx.rotate(rotation * Math.PI / 180);
-            
-            // Apply scaling (handle negative scales for mirroring)
-            ctx.scale(scaleX, scaleY);
-            
-            // Draw the image centered
-            ctx.drawImage(
-                nose.image(),
-                -width/2,
-                -height/2,
-                width,
-                height
-            );
-            
-            // Restore the canvas state
-            ctx.restore();
+        // Try Konva's built-in method first
+        const dataURL = stage.toDataURL({
+            mimeType: 'image/png',
+            quality: 1,
+            pixelRatio: 1
         });
-        
-        // Convert to data URL and download
-        const dataURL = canvas.toDataURL('image/png');
         
         // Create download link
         const link = document.createElement('a');
@@ -318,8 +265,82 @@ function downloadMeme() {
         document.body.removeChild(link);
         
     } catch (error) {
-        console.error('Download failed:', error);
-        alert('Download failed due to security restrictions. Please try using a web server instead of opening the file directly.');
+        console.error('Konva export failed, trying manual method:', error);
+        
+        // Fallback: Create a new Konva stage for export
+        try {
+            // Create a temporary container
+            const tempContainer = document.createElement('div');
+            tempContainer.style.position = 'absolute';
+            tempContainer.style.left = '-9999px';
+            tempContainer.style.top = '-9999px';
+            document.body.appendChild(tempContainer);
+            
+            // Create a new stage with the same dimensions
+            const exportStage = new Konva.Stage({
+                container: tempContainer,
+                width: stage.width(),
+                height: stage.height(),
+            });
+            
+            const exportLayer = new Konva.Layer();
+            exportStage.add(exportLayer);
+            
+            // Clone background image
+            if (backgroundImage) {
+                const exportBg = new Konva.Image({
+                    x: backgroundImage.x(),
+                    y: backgroundImage.y(),
+                    image: backgroundImage.image(),
+                    width: backgroundImage.width(),
+                    height: backgroundImage.height(),
+                });
+                exportLayer.add(exportBg);
+            }
+            
+            // Clone nose images with all transformations
+            noseImages.forEach(nose => {
+                const exportNose = new Konva.Image({
+                    x: nose.x(),
+                    y: nose.y(),
+                    image: nose.image(),
+                    width: nose.width(),
+                    height: nose.height(),
+                    scaleX: nose.scaleX(),
+                    scaleY: nose.scaleY(),
+                    rotation: nose.rotation(),
+                });
+                exportLayer.add(exportNose);
+            });
+            
+            exportLayer.draw();
+            
+            // Export the clean stage
+            const dataURL = exportStage.toDataURL({
+                mimeType: 'image/png',
+                quality: 1,
+                pixelRatio: 1
+            });
+            
+            // Create download link
+            const link = document.createElement('a');
+            link.download = 'nose-meme.png';
+            link.href = dataURL;
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            
+            // Trigger download
+            link.click();
+            document.body.removeChild(link);
+            
+            // Clean up
+            exportStage.destroy();
+            document.body.removeChild(tempContainer);
+            
+        } catch (fallbackError) {
+            console.error('Fallback export failed:', fallbackError);
+            alert('Download failed due to security restrictions. Please try using a web server instead of opening the file directly.');
+        }
     }
 }
 
