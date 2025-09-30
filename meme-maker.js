@@ -274,15 +274,15 @@ function downloadMeme() {
             const scaleY = nose.scaleY();
             const rotation = nose.rotation();
             
-            // Calculate actual dimensions after scaling
-            const scaledWidth = width * Math.abs(scaleX);
-            const scaledHeight = height * Math.abs(scaleY);
+            // Calculate the actual center position after scaling
+            const centerX = x + (width * scaleX) / 2;
+            const centerY = y + (height * scaleY) / 2;
             
             // Save the current canvas state
             ctx.save();
             
-            // Move to the center of the nose image
-            ctx.translate(x + width/2, y + height/2);
+            // Move to the calculated center
+            ctx.translate(centerX, centerY);
             
             // Apply rotation
             ctx.rotate(rotation * Math.PI / 180);
