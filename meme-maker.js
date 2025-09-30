@@ -264,12 +264,18 @@ function downloadMeme() {
         
         // Draw nose images
         noseImages.forEach(nose => {
+            // Get the actual scaled dimensions from the Konva image
+            const scaleX = nose.scaleX();
+            const scaleY = nose.scaleY();
+            const width = nose.width() * scaleX;
+            const height = nose.height() * scaleY;
+            
             ctx.drawImage(
                 nose.image(),
                 nose.x(),
                 nose.y(),
-                nose.width(),
-                nose.height()
+                width,
+                height
             );
         });
         
