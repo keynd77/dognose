@@ -507,9 +507,25 @@ function handleNoseTouchSelection(nose) {
     layer.draw();
 }
 
+// Update button text for mobile
+function updateButtonTexts() {
+    const uploadBtn = document.getElementById('uploadBtn');
+    const addNoseBtn = document.getElementById('addNoseBtn');
+    
+    if (window.innerWidth <= 768) {
+        uploadBtn.textContent = uploadBtn.getAttribute('data-mobile-text');
+        addNoseBtn.textContent = addNoseBtn.getAttribute('data-mobile-text');
+    } else {
+        uploadBtn.textContent = uploadBtn.getAttribute('data-desktop-text');
+        addNoseBtn.textContent = addNoseBtn.getAttribute('data-desktop-text');
+    }
+}
+
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
     initMemeMaker();
     window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', updateButtonTexts);
     handleResize(); // Initial resize
+    updateButtonTexts(); // Initial button text update
 });

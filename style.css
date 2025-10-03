@@ -102,6 +102,9 @@ body {
     transform: translate(-50%, -50%);
     text-align: center;
     z-index: 1;
+    width: 90%;
+    max-width: 90vw;
+    padding: 0 5%;
 }
 
 .title {
@@ -116,6 +119,8 @@ body {
     font-size: 1.2rem;
     color: black;
     font-weight: normal;
+    margin-bottom: 1rem;
+    line-height: 1.4;
 }
 
 .meme-link {
@@ -171,5 +176,77 @@ body {
     to {
         opacity: 1;
         transform: scaleX(-1) scale(1);
+    }
+}
+
+.ca-address {
+    word-break: break-all;
+    hyphens: auto;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .title {
+        font-size: 10rem;
+        max-width: 90vw;
+        word-wrap: break-word;
+        margin-bottom: 1rem;
+    }
+    
+    .subtitle {
+        font-size: 1.2rem;
+        padding: 0 20px;
+        max-width: 90vw;
+        margin-bottom: 1.5rem;
+    }
+    
+    .meme-link {
+        font-size: 1.1rem;
+        padding: 12px 24px;
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 8rem;
+        max-width: 90vw;
+        word-wrap: break-word;
+        margin-bottom: 1rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+        padding: 0 15px;
+        max-width: 90vw;
+        margin-bottom: 1.5rem;
+    }
+    
+    .meme-link {
+        font-size: 1rem;
+        padding: 10px 20px;
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .title {
+        font-size: 6rem;
+        max-width: 90vw;
+        word-wrap: break-word;
+        margin-bottom: 1rem;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
+        padding: 0 10px;
+        max-width: 90vw;
+        margin-bottom: 1.5rem;
+    }
+    
+    .meme-link {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+        margin-top: 1rem;
     }
 }

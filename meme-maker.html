@@ -14,6 +14,7 @@
 <body>
     <div class="meme-maker-container">
         <div class="top-controls">
+            <a href="index.html" class="mobile-back-btn">←</a>
             <button class="social-button twitter-button" onclick="window.open('https://x.com/nose__cto', '_blank')">𝕏</button>
             <button class="social-button community-button" onclick="window.open('https://x.com/i/communities/1972856955753681002', '_blank')">👥</button>
         </div>
@@ -21,9 +22,9 @@
         <div class="meme-header">
             <h1 class="meme-title">NOSE MEME MAKER</h1>
             <div class="controls">
-                <a href="index.html" class="back-btn">← Back to Main</a>
-                <button id="uploadBtn" class="upload-btn">Upload Image</button>
-                <button id="addNoseBtn" class="add-nose-btn">Add Nose</button>
+                <a href="index.html" class="back-btn desktop-back-btn">← Back to Main</a>
+                <button id="uploadBtn" class="upload-btn" data-desktop-text="Upload Image" data-mobile-text="Image">Upload Image</button>
+                <button id="addNoseBtn" class="add-nose-btn" data-desktop-text="Add Nose" data-mobile-text="Nose">Add Nose</button>
                 <button id="downloadBtn" class="download-btn">Download</button>
                 <button id="clearBtn" class="clear-btn">Clear All</button>
             </div>
