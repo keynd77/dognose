@@ -17,6 +17,9 @@ function initMemeMaker() {
 
     // Set up event listeners
     setupEventListeners();
+    
+    // Add mobile touch support
+    setupMobileTouchSupport();
 }
 
 // Set up all event listeners
@@ -130,6 +133,14 @@ function loadImageToCanvas(file) {
                 layer.draw();
             });
             
+            // Add touch handler to hide transformers when touching background
+            backgroundImage.on('touchstart', function(e) {
+                e.evt.preventDefault();
+                layer.find('Transformer').forEach(t => t.detach());
+                selectedNose = null;
+                layer.draw();
+            });
+            
             layer.add(backgroundImage);
             layer.draw();
             
@@ -210,6 +221,54 @@ function addNoseToCanvas() {
                 }
                 layer.draw();
             }, 200); // 200ms delay to distinguish from double-click
+        });
+        
+        // Add touch event support for mobile
+        let touchStartTime;
+        let touchStartPos;
+        
+        nose.on('touchstart', function(e) {
+            e.evt.preventDefault();
+            e.cancelBubble = true;
+            
+            const touch = e.evt.touches[0];
+            touchStartTime = Date.now();
+            touchStartPos = { x: touch.clientX, y: touch.clientY };
+        });
+        
+        nose.on('touchend', function(e) {
+            e.evt.preventDefault();
+            e.cancelBubble = true;
+            
+            const touchDuration = Date.now() - touchStartTime;
+            const touch = e.evt.changedTouches[0];
+            
+            // Check if this was a tap (short duration and minimal movement)
+            if (touchDuration < 500) {
+                const touchEndPos = { x: touch.clientX, y: touch.clientY };
+                const distance = Math.sqrt(
+                    Math.pow(touchEndPos.x - touchStartPos.x, 2) + 
+                    Math.pow(touchEndPos.y - touchStartPos.y, 2)
+                );
+                
+                // If it's a tap (minimal movement), handle selection
+                if (distance < 10) {
+                    // Hide all other transformers first
+                    layer.find('Transformer').forEach(t => t.detach());
+                    
+                    // If this nose is already selected, deselect it
+                    if (selectedNose === this) {
+                        selectedNose = null;
+                        this.transformer.detach();
+                    } else {
+                        // Select this nose
+                        selectedNose = this;
+                        this.transformer.nodes([this]);
+                        layer.add(this.transformer);
+                    }
+                    layer.draw();
+                }
+            }
         });
         
         // Hide transformer when clicking elsewhere
@@ -375,6 +434,77 @@ function handleResize() {
         stage.height(containerHeight);
         stage.draw();
     }
+}
+
+// Set up mobile touch support
+function setupMobileTouchSupport() {
+    // Prevent default touch behaviors that could interfere with canvas interactions
+    const konvaContainer = document.getElementById('konvaContainer');
+    
+    // Prevent scrolling and other default touch behaviors
+    konvaContainer.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+    }, { passive: false });
+    
+    konvaContainer.addEventListener('touchmove', function(e) {
+        e.preventDefault();
+    }, { passive: false });
+    
+    konvaContainer.addEventListener('touchend', function(e) {
+        e.preventDefault();
+    }, { passive: false });
+    
+    // Add touch event support to Konva stage
+    stage.on('touchstart', function(e) {
+        e.evt.preventDefault();
+    });
+    
+    stage.on('touchmove', function(e) {
+        e.evt.preventDefault();
+    });
+    
+    stage.on('touchend', function(e) {
+        e.evt.preventDefault();
+    });
+    
+    // Handle touch events for nose images
+    stage.on('touchstart', function(e) {
+        const touch = e.evt.touches[0];
+        const pos = stage.getPointerPosition();
+        
+        if (pos) {
+            // Find the shape at the touch position
+            const shape = stage.getIntersection(pos);
+            
+            if (shape && shape.getClassName() === 'Image' && shape !== backgroundImage) {
+                // Handle nose selection with touch
+                handleNoseTouchSelection(shape);
+            } else if (shape === backgroundImage || !shape) {
+                // Hide transformers when touching background
+                layer.find('Transformer').forEach(t => t.detach());
+                selectedNose = null;
+                layer.draw();
+            }
+        }
+    });
+}
+
+// Handle nose selection with touch events
+function handleNoseTouchSelection(nose) {
+    // Hide all other transformers first
+    layer.find('Transformer').forEach(t => t.detach());
+    
+    // If this nose is already selected, deselect it
+    if (selectedNose === nose) {
+        selectedNose = null;
+        nose.transformer.detach();
+    } else {
+        // Select this nose
+        selectedNose = nose;
+        nose.transformer.nodes([nose]);
+        layer.add(nose.transformer);
+    }
+    layer.draw();
 }
 
 // Initialize when page loads

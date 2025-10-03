@@ -126,6 +126,12 @@
     overflow: hidden;
     margin: 0;
     padding: 0;
+    touch-action: none; /* Prevent default touch behaviors */
+    -webkit-touch-callout: none; /* Disable callout on iOS */
+    -webkit-user-select: none; /* Disable text selection */
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* Responsive Design */
