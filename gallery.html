@@ -3,35 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOSE</title>
+    <title>NOSE Gallery</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="gallery.css">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
 </head>
 <body>
+    <div class="gallery-container">
         <div class="top-controls">
-            <button id="soundToggle" class="sound-toggle">🔊</button>
-            <button class="social-button gallery-button" onclick="window.open('gallery.html', '_blank')">
-                <img src="image-icon.png" alt="Gallery" class="gallery-icon">
-            </button>
+            <a href="index.html" class="social-button back-button">←</a>
             <button class="social-button twitter-button" onclick="window.open('https://x.com/nose__cto', '_blank')">𝕏</button>
             <button class="social-button community-button" onclick="window.open('https://x.com/i/communities/1972856955753681002', '_blank')">👥</button>
-            <button class="social-button dex-button" onclick="window.open('https://dexscreener.com/solana/4Bf3MmVBm94pMcXmnUfWrG95AApZHuEbGoztdGAxpump', '_blank')">
-                <img src="dex.png" alt="DexScreener" class="dex-icon">
-            </button>
         </div>
-    
-    <div class="container">
-        <h1 class="title">NOSE</h1>
-        <p class="subtitle">CA: <span class="ca-address">4Bf3MmVBm94pMcXmnUfWrG95AApZHuEbGoztdGAxpump</span></p>
-            <a href="meme-maker.html" class="meme-link">Create Memes</a>
+        
+        <div class="gallery-header">
+            <h1 class="gallery-title">NOSE GALLERY</h1>
+            <a href="index.html" class="back-btn desktop-back-btn">← Back to Main</a>
+        </div>
+        
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Memes will be loaded here by JavaScript -->
+        </div>
     </div>
     
-    <script src="script.js"></script>
+    <script src="gallery.js"></script>
 </body>
 </html>
